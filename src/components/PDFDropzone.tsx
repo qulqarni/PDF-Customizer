@@ -20,17 +20,20 @@ const PDFDropzone: React.FC<PDFDropzoneProps> = ({ onFileAccepted }) => {
   return (
     <div
       {...getRootProps()}
-      className={`w-full p-8 border-2 border-dashed rounded-lg text-center cursor-pointer transition-colors
-        ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'}`}
+      className={`w-full p-8 sm:p-12 border-2 border-dashed rounded-xl text-center cursor-pointer transition-all duration-200
+        ${isDragActive 
+          ? 'border-blue-500 bg-blue-50 scale-[1.02]' 
+          : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
+        }`}
     >
       <input {...getInputProps()} />
-      <FileUp className="mx-auto h-12 w-12 text-gray-400" />
-      <p className="mt-2 text-sm text-gray-600">
+      <FileUp className="mx-auto h-16 w-16 sm:h-20 sm:w-20 text-gray-400 mb-4" />
+      <p className="text-base sm:text-lg text-gray-700 font-medium mb-2">
         {isDragActive
           ? 'Drop the PDF here'
           : 'Drag and drop a PDF file here, or click to select'}
       </p>
-      <p className="text-xs text-gray-500 mt-1">Maximum file size: 100MB</p>
+      <p className="text-sm text-gray-500">Maximum file size: 100MB</p>
     </div>
   );
 };

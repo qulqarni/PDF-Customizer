@@ -157,8 +157,8 @@ const App: React.FC = () => {
         {!pdfFile ? (
           <PDFDropzone onFileAccepted={handleFileAccepted} />
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
+          <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
+            <div className="order-2 lg:order-1 lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-sm text-gray-600">
                   File: {pdfFile.name}
@@ -183,8 +183,8 @@ const App: React.FC = () => {
               />
             </div>
 
-            <div className="lg:col-span-1">
-              <div className="sticky top-8">
+            <div className="order-1 lg:order-2 lg:col-span-1">
+              <div className="lg:sticky lg:top-8">
                 <BatchConfigForm
                   config={batchConfig}
                   onChange={handleBatchConfigChange}
