@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { FileText, Github } from 'lucide-react';
+import { FileText, Github, LogOut } from 'lucide-react';
 import PDFDropzone from './components/PDFDropzone';
 import PDFViewer from './components/PDFViewer';
 import BatchConfigForm from './components/BatchConfigForm';
 import { PageConfig, ProcessingError } from './types';
 import { processPDF } from './utils/pdfProcessor';
 import ErrorMessage from './components/ErrorMessage';
+import { useAuth } from './context/AuthContext';
 
 const App: React.FC = () => {
+  const { user, signOut } = useAuth();
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [pageConfigs, setPageConfigs] = useState<PageConfig[]>([]);
   const [selectedPages, setSelectedPages] = useState<number[]>([]);
@@ -152,6 +154,20 @@ const App: React.FC = () => {
             A powerful tool to customize your PDF files. Add page numbers, borders, and footers with just a few clicks.
             Select multiple pages and apply batch modifications effortlessly.
           </p>
+          {user && (
+            <div className="mt-4 flex items-center gap-4">
+              <span className="text-sm text-gray-600">
+                Signed in as <span className="font-medium text-gray-900">{user.email}</span>
+              </span>
+              <button
+                onClick={() => signOut()}
+                className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg px-3 py-1.5 hover:bg-gray-100 transition"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign out
+              </button>
+            </div>
+          )}
         </div>
         
         {!pdfFile ? (
