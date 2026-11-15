@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Download, FileText, Github, LogOut } from 'lucide-react';
-import reportPdfUrl from '../public/PDF-Customizer-Report.pdf?url';
+import { REPORT_PDF_BASE64 } from './assets/reportPdf';
 import PDFDropzone from './components/PDFDropzone';
 import PDFViewer from './components/PDFViewer';
 import BatchConfigForm from './components/BatchConfigForm';
@@ -171,12 +171,18 @@ const App: React.FC = () => {
           )}
           <button
             onClick={() => {
+              const binary = atob(REPORT_PDF_BASE64);
+              const bytes = new Uint8Array(binary.length);
+              for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+              const blob = new Blob([bytes], { type: 'application/pdf' });
+              const url = URL.createObjectURL(blob);
               const link = document.createElement('a');
-              link.href = reportPdfUrl;
+              link.href = url;
               link.download = 'PDF-Customizer-Report.pdf';
               document.body.appendChild(link);
               link.click();
               document.body.removeChild(link);
+              URL.revokeObjectURL(url);
             }}
             className="mt-6 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 transition"
           >
