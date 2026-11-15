@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Download, FileText, Github, LogOut } from 'lucide-react';
+import reportPdfUrl from '../public/PDF-Customizer-Report.pdf?url';
 import PDFDropzone from './components/PDFDropzone';
 import PDFViewer from './components/PDFViewer';
 import BatchConfigForm from './components/BatchConfigForm';
@@ -168,14 +169,20 @@ const App: React.FC = () => {
               </button>
             </div>
           )}
-          <a
-            href="/PDF-Customizer-Report.pdf"
-            download="PDF-Customizer-Report.pdf"
+          <button
+            onClick={() => {
+              const link = document.createElement('a');
+              link.href = reportPdfUrl;
+              link.download = 'PDF-Customizer-Report.pdf';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
             className="mt-6 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 transition"
           >
             <Download className="w-4 h-4" />
             Download Project Report (PDF)
-          </a>
+          </button>
         </div>
         
         {!pdfFile ? (
